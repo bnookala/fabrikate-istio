@@ -8,6 +8,10 @@ hooks:
     - tar xvf istio-1.0.5-linux.tar.gz -C tmp
   after-install:
     - rm istio-1.0.5-linux.tar.gz
+  after-generate:
+    - sed -i.bak 's/zipkin:9411/zipkin.jaeger.svc.cluster.local:9411/g' generated/prod/istio/istio.yaml
+    - sed -i.bak 's/zipkin.istio-system:9411/zipkin.jaeger.svc.cluster.local:9411/g' generated/prod/istio/istio.yaml
+
 subcomponents:
   - name: istio-namespace
     generator: static
